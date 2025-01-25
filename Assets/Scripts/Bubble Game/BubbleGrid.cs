@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace BubbleGame {
     public class BubbleGrid : MonoBehaviour {
+        public Dictionary<Vector3Int, GluedBubble> gridHash = new();
         [SerializeField] private GameObject _throwBubble;
         [SerializeField] private Transform _basePosition;
+        [SerializeField] private int bubblesToFall = 5;
         private Grid grid;
-        private Dictionary<Vector3Int, GluedBubble> _gridHash = new();
 
         public void SpawnBubble() {
             GameObject bubble = Instantiate(_throwBubble, _basePosition.position, new Quaternion(), null);
@@ -20,7 +21,7 @@ namespace BubbleGame {
             Vector3Int cellPosition = grid.WorldToCell(bubble.transform.position);
             bubble.transform.position = grid.GetCellCenterWorld(cellPosition);
             bubble.position = cellPosition;
-            _gridHash.Add(cellPosition, bubble);
+            gridHash.Add(cellPosition, bubble);
 
             Vector3Int bottomRight;
             Vector3Int bottomLeft;
@@ -55,13 +56,17 @@ namespace BubbleGame {
 
             foreach (var (position, action) in neighborMappings)
             {
-                if (_gridHash.TryGetValue(position, out var neighbor))
+                if (gridHash.TryGetValue(position, out var neighbor))
                 {
                     action(neighbor);
                 }
             }
 
             List<GluedBubble> sameColor = bubble.GetSameColorBubbles();
+            
+            if (sameColor.Count >= bubblesToFall) {
+                bubble.Fall(true);
+            }
 
             Debug.Log(sameColor.Count);
         }

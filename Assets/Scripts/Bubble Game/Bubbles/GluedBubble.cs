@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BubbleGame {
     public class GluedBubble: Bubble {
@@ -16,14 +19,54 @@ namespace BubbleGame {
             adjacents.BottomRight = null;
         }
 
-        public void Fall() {
-            // TODO
+        public void Fall(bool recursive) {
+            StartCoroutine(Falling(recursive));
         }
 
         public List<GluedBubble> GetSameColorBubbles() {
             List<GluedBubble> bubbles = new();
             GetSameColorBubbles(bubbles);
             return bubbles;
+        }
+
+        public void CheckTop() {
+            if (adjacents.TopRight == null && adjacents.TopLeft == null)
+                Fall(false);
+        }
+
+        private void RemoveBubbleInAdjacents(GluedBubble bubble) {
+            if (this == bubble.adjacents.TopLeft)
+                bubble.adjacents.TopLeft = null;
+            else if (this == bubble.adjacents.TopRight)
+                bubble.adjacents.TopRight = null;
+            else if (this == bubble.adjacents.BottomLeft)
+                bubble.adjacents.BottomLeft = null;
+            else if (this == bubble.adjacents.BottomRight)
+                bubble.adjacents.BottomRight = null;
+            else if (this == bubble.adjacents.Left)
+                bubble.adjacents.Left = null;
+            else if (this == bubble.adjacents.Right)
+                bubble.adjacents.Right = null;
+        }
+
+        private IEnumerator Falling(bool recursive) {
+            yield return new WaitForSeconds(0.1f);
+            GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.2f);
+
+            foreach (GluedBubble bubble in GetAdjacentBubbles()) {
+                RemoveBubbleInAdjacents(bubble);
+                if (bubble.bubbleColor == bubbleColor && recursive)
+                    bubble.Fall(true);
+            }
+
+            if (adjacents.BottomLeft != null)
+                adjacents.BottomLeft.CheckTop();
+            if (adjacents.BottomRight != null)
+                adjacents.BottomRight.CheckTop();
+
+            bubbleGrid.gridHash.Remove(position);
+            Destroy(gameObject);
         }
 
         private void GetSameColorBubbles(List<GluedBubble> bubbles) {
