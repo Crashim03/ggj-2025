@@ -38,10 +38,11 @@ namespace BubbleGame {
         }
     }
     
-    public enum BubbleColor {
-        Red,
-        Blue,
-        Yellow,
-        Green
-    }
+}
+
+public enum BubbleColor {
+    Red,
+    Blue,
+    Yellow,
+    Green
 }

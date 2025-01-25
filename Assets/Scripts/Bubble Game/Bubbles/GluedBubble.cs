@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace BubbleGame {
     public class GluedBubble: Bubble {
@@ -22,8 +18,8 @@ namespace BubbleGame {
             adjacents.BottomRight = null;
         }
 
-        public void Fall(bool recursive) {
-            StartCoroutine(Falling(recursive));
+        public void Fall(bool recursive, List<GluedBubble> context) {
+            StartCoroutine(Falling(recursive, context));
         }
 
         public List<GluedBubble> GetSameColorBubbles() {
@@ -65,24 +61,31 @@ namespace BubbleGame {
                 bubble.adjacents.Right = null;
         }
         
-        private IEnumerator Falling(bool recursive) {
+        private IEnumerator Falling(bool recursive, List<GluedBubble> context) {
             bubbleGrid.SetPoppingTimer();
-
+            context.Add(this);
             yield return new WaitForSeconds(bubblePopTime);
             GetComponent<SpriteRenderer>().enabled = false;
 
             List<GluedBubble> adjacentBubbles = GetAdjacentBubbles();
             foreach (GluedBubble bubble in adjacentBubbles) {
+                if (context.Contains(bubble))
+                    continue;
+
                 RemoveBubbleInAdjacents(bubble);
                 if (bubble.bubbleColor == bubbleColor && recursive)
-                    bubble.Fall(true);
+                    bubble.Fall(true, context);
             }
 
             foreach (GluedBubble bubble in adjacentBubbles) {
+                if (context.Contains(bubble))
+                    continue;
+
                 if (bubble.CanFall(new List<GluedBubble>()))
-                    bubble.Fall(false);
+                    bubble.Fall(false, context);
             }
 
+            GameManager.Instance.Pop(bubbleColor);
             bubbleGrid.bubblesToDestroy.Add(gameObject);
         }
 
