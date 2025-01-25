@@ -7,13 +7,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private Transform spawnPosition;
     [SerializeField]
+    private Transform endPosition;
+    [SerializeField]
     private GameObject enemyObject;
     [SerializeField]
     private float spawnerCooldown = 0.5f;
     [SerializeField]
-    private float waveCooldown;
+    private float waveCooldown = 5f;
     [SerializeField]
-    private int spawnCount;
+    private int spawnCount = 4;
 
     private void Start()
     {
@@ -32,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 yield return enemyCooldown;
                 GameObject enemy = Instantiate(enemyObject, spawnPosition);
+                var enemyScript = enemy.GetComponent<EnemyBehaviour>();
+                enemyScript.SetEndPoint(endPosition);
             }
         }
     }
