@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BubbleGame {
     public class GluedBubble: Bubble {
-        private Adjacents adjacents;
+        public Adjacents adjacents;
+        public Vector3Int position;
 
         public GluedBubble() {
             adjacents.TopLeft = null;
@@ -20,15 +22,32 @@ namespace BubbleGame {
 
         public List<GluedBubble> GetSameColorBubbles() {
             List<GluedBubble> bubbles = new();
+            GetSameColorBubbles(bubbles);
+            return bubbles;
+        }
+
+        private void GetSameColorBubbles(List<GluedBubble> bubbles) {
             List<GluedBubble> adjacents = GetAdjacentBubbles();
+            bubbles.Add(this);
 
             foreach (GluedBubble bubble in adjacents) {
-                if (bubble.bubbleColor == bubbleColor)
-                    bubbles.Add(bubble);
+                if (bubbles.Contains(bubble) || bubble.bubbleColor != bubbleColor)
+                    continue;
 
-                bubbles.AddRange(bubble.GetSameColorBubbles());
+                bubble.GetSameColorBubbles(bubbles);
             }
-            return bubbles;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is GluedBubble otherBubble)
+            {
+                return position == otherBubble.position;
+            }
+            return false;
+        }
+
+        public override int GetHashCode() {
+            return base.GetHashCode();
         }
 
         private List<GluedBubble> GetAdjacentBubbles() {
@@ -55,14 +74,14 @@ namespace BubbleGame {
             return bubbles;
         }
 
-        private struct Adjacents {
-            public GluedBubble TopLeft;
-            public GluedBubble TopRight;
-            public GluedBubble Right;
-            public GluedBubble Left;
-            public GluedBubble BottomRight;
-            public GluedBubble BottomLeft;
+    }
+    public struct Adjacents {
+        public GluedBubble TopLeft;
+        public GluedBubble TopRight;
+        public GluedBubble Right;
+        public GluedBubble Left;
+        public GluedBubble BottomRight;
+        public GluedBubble BottomLeft;
 
-        }
     }
 }

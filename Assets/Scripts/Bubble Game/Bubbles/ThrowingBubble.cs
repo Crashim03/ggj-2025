@@ -38,13 +38,14 @@ namespace BubbleGame {
 
         public void Stick() {
             rigidBody.bodyType = RigidbodyType2D.Static;
+
             GluedBubble gluedBubble = gameObject.AddComponent<GluedBubble>();
             gluedBubble.bubbleColor = bubbleColor;
             gluedBubble.bubbleGrid = bubbleGrid;
 
-            Vector3Int cellPosition = bubbleGrid.grid.WorldToCell(transform.position);
-            transform.position = bubbleGrid.grid.GetCellCenterWorld(cellPosition);
+            bubbleGrid.AddGluedBubble(gluedBubble);
             bubbleGrid.SpawnBubble();
+            
             Destroy(this);
         }
 
