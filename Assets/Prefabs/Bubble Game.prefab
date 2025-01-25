@@ -58,9 +58,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _throwBubble: {fileID: 900329960146616267, guid: a0add6158e4c4398283241f62d161eae, type: 3}
+  _glueBubble: {fileID: 900329960146616267, guid: eb2155931ea974680a31216d1cb750c6, type: 3}
   _ceilingRow: 8
   _basePosition: {fileID: 5132099817984808983}
   bubblesToFall: 3
+  _minCollumn: -5
+  _maxCollumn: 6
 --- !u!1 &1592890556982881421
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ namespace BubbleGame {
         [SerializeField] private float _maxVelocity = 5f;
         [SerializeField] private float _minDistanceToThrow = 11f;
         [SerializeField] private float _angleToThrow = 160f;
-        public Transform _basePosition;
+        public Transform basePosition;
         private bool _holding = false;
         private bool _thrown = false;
         private Vector2 _velocity;
@@ -26,10 +26,10 @@ namespace BubbleGame {
         public void Throw()
         {
             _holding = false;
-            Vector3 velocity = _basePosition.position - transform.position;
+            Vector3 velocity = basePosition.position - transform.position;
             float maxDistance = _range;
 
-            float distance = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),_basePosition.position);
+            float distance = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),basePosition.position);
 
             float speed = distance * _maxVelocity / maxDistance;
 
@@ -48,8 +48,6 @@ namespace BubbleGame {
             gluedBubble.bubbleGrid = bubbleGrid;
 
             bubbleGrid.AddGluedBubble(gluedBubble);
-            bubbleGrid.SpawnBubble();
-            
             Destroy(this);
         }
 
@@ -64,7 +62,7 @@ namespace BubbleGame {
         }
 
         private void Update() {
-            _distance = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), _basePosition.position);
+            _distance = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), basePosition.position);
 
             if (!_holding || _thrown)
                 return;
@@ -72,20 +70,20 @@ namespace BubbleGame {
             if (Input.GetMouseButtonUp(0)) {
                 if (_distance < _minDistanceToThrow) {
                     _holding = false;
-                    transform.position = _basePosition.position;
+                    transform.position = basePosition.position;
                 } else 
                     Throw();
             }
             
             Vector3 position;
-            if ((Camera.main.ScreenToWorldPoint(Input.mousePosition) - _basePosition.position).sqrMagnitude < Mathf.Pow(_range, 2))
+            if ((Camera.main.ScreenToWorldPoint(Input.mousePosition) - basePosition.position).sqrMagnitude < Mathf.Pow(_range, 2))
                 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             else {
-                Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _basePosition.position;
-                position = _basePosition.position + direction.normalized * _range;
+                Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - basePosition.position;
+                position = basePosition.position + direction.normalized * _range;
             }
 
-            float angle = Vector3.SignedAngle(Vector2.down, position - _basePosition.position, Vector3.right);
+            float angle = Vector3.SignedAngle(Vector2.down, position - basePosition.position, Vector3.right);
 
             if (angle > _angleToThrow / 2) {
                 Debug.Log(angle - _angleToThrow / 2);
