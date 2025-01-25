@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -38,7 +39,6 @@ namespace BubbleGame {
                 gridHash.Remove(b.GetComponent<GluedBubble>().position);
                 Destroy(b);
             }
-
 
             bubblesToDestroy.Clear();
 

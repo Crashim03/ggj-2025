@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 473941975184844824}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6441882, y: -0.2289635, z: -0.095098585}
+  m_LocalPosition: {x: 0.6441882, y: -0.52, z: -0.095098585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,7 +41,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473941975184844824}
   m_Enabled: 1
-  m_CellSize: {x: 0.7, y: 0.7, z: 0.7}
+  m_CellSize: {x: 0.67, y: 0.75, z: 0.7}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
   m_CellSwizzle: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubblesToDestroy: []
-  cellSize: 0.525
+  cellSize: 0.56253
   maxPoppingTime: 0.8
   poppingTime: 0
   _throwBubble: {fileID: 900329960146616267, guid: a0add6158e4c4398283241f62d161eae, type: 3}
@@ -258,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 2681000922776050178}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.88, y: 1.5259647, z: 0.07739678}
+  m_LocalPosition: {x: 1.71, y: 1.5259647, z: 0.07739678}
   m_LocalScale: {x: 0.6328, y: 10.051787, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -519,7 +519,7 @@ Transform:
   m_GameObject: {fileID: 8659214783865205871}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.24, y: 1.5259647, z: 0.07739678}
+  m_LocalPosition: {x: -7.08, y: 1.5259647, z: 0.07739678}
   m_LocalScale: {x: 0.6328, y: 10.051787, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
