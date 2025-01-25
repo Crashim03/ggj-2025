@@ -23,7 +23,7 @@ namespace BubbleGame {
             List<GluedBubble> adjacents = GetAdjacentBubbles();
 
             foreach (GluedBubble bubble in adjacents) {
-                if (bubble.color == color)
+                if (bubble.bubbleColor == bubbleColor)
                     bubbles.Add(bubble);
 
                 bubbles.AddRange(bubble.GetSameColorBubbles());

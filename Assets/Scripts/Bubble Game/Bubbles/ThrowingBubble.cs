@@ -4,11 +4,12 @@ using UnityEngine.EventSystems;
 
 namespace BubbleGame {
     public class ThrowingBubble: Bubble {
-        [SerializeField] private Transform _basePosition;
         [SerializeField] private float _range = 5f;
         [SerializeField] private float _maxVelocity = 5f;
+        public Transform _basePosition;
         private bool _holding = false;
         private bool _thrown = false;
+        private Vector2 _velocity;
         
 
         private void OnMouseDown() {
@@ -21,23 +22,40 @@ namespace BubbleGame {
         public void Throw()
         {
             _holding = false;
-            Vector3 direction = _basePosition.position - transform.position;
+            Vector3 velocity = _basePosition.position - transform.position;
             float maxDistance = _range;
 
             float distance = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),_basePosition.position);
 
-            float velocity = distance * _maxVelocity / maxDistance;
+            float speed = distance * _maxVelocity / maxDistance;
 
-            direction.Normalize();
-            direction *= velocity;
-
-            Debug.Log(velocity);
-            rigidBody.AddForce(direction, ForceMode2D.Impulse);
+            velocity.Normalize();
+            velocity *= speed;
+            rigidBody.AddForce(velocity, ForceMode2D.Impulse);
             _thrown = true;
+            _velocity = velocity;
         }
 
         public void Stick() {
-            // TODO
+            rigidBody.bodyType = RigidbodyType2D.Static;
+            GluedBubble gluedBubble = gameObject.AddComponent<GluedBubble>();
+            gluedBubble.bubbleColor = bubbleColor;
+            gluedBubble.bubbleGrid = bubbleGrid;
+
+            Vector3Int cellPosition = bubbleGrid.grid.WorldToCell(transform.position);
+            transform.position = bubbleGrid.grid.GetCellCenterWorld(cellPosition);
+            bubbleGrid.SpawnBubble();
+            Destroy(this);
+        }
+
+        private void OnCollisionEnter2D(Collision2D other) {
+
+            if (other.gameObject.TryGetComponent<GluedBubble>(out _) || other.gameObject.CompareTag("Top")) {
+                Stick();
+                return;
+            }
+            _velocity = new Vector2(-_velocity.x, _velocity.y);
+            rigidBody.linearVelocity = _velocity;
         }
 
         private void Update() {
@@ -53,6 +71,10 @@ namespace BubbleGame {
                 Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _basePosition.position;
                 rigidBody.MovePosition(_basePosition.position + direction.normalized * _range);
             }
+        }
+
+        private void Start() {
+            SetRandomColor();
         }
     }
 }
