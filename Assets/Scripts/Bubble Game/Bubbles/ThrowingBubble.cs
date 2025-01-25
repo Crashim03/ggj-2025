@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace BubbleGame {
         [SerializeField] private float _range = 5f;
         [SerializeField] private float _maxVelocity = 5f;
         [SerializeField] private float _minDistanceToThrow = 11f;
-        [SerializeField] private float _angleToThrow = 160f;
+        [SerializeField] private float _timeToThrow = 5f;
         public Transform basePosition;
         private bool _holding = false;
         private bool _thrown = false;
@@ -38,6 +39,7 @@ namespace BubbleGame {
             rigidBody.AddForce(velocity, ForceMode2D.Impulse);
             _thrown = true;
             _velocity = velocity;
+            StartCoroutine(ThrowTimer());
         }
 
         public void Stick() {
@@ -59,6 +61,18 @@ namespace BubbleGame {
             }
             _velocity = new Vector2(-_velocity.x, _velocity.y);
             rigidBody.linearVelocity = _velocity;
+        }
+
+        private IEnumerator ThrowTimer() {
+            float timer = _timeToThrow;
+            while (timer > 0) {
+                timer -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            _velocity = Vector3.zero;
+            _thrown = false;
+            transform.position = basePosition.position;
+            rigidBody.linearVelocity = Vector3.zero;
         }
 
         private void Update() {
@@ -83,11 +97,6 @@ namespace BubbleGame {
                 position = basePosition.position + direction.normalized * _range;
             }
 
-            float angle = Vector3.SignedAngle(Vector2.down, position - basePosition.position, Vector3.right);
-
-            if (angle > _angleToThrow / 2) {
-                Debug.Log(angle - _angleToThrow / 2);
-            }
             rigidBody.MovePosition(position);
         }
 

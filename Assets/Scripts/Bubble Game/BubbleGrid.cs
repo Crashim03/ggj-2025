@@ -28,12 +28,10 @@ namespace BubbleGame {
 
         public IEnumerator SpawnBubble() {
             while (poppingTime > 0) {
-                Debug.Log("waiting");
                 poppingTime -= Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
                 
-            Debug.Log("Got out");
             
             foreach (GameObject b in bubblesToDestroy) {
                 gridHash.Remove(b.GetComponent<GluedBubble>().position);
@@ -87,7 +85,6 @@ namespace BubbleGame {
             bubble.position = cellPosition;
             gridHash.Add(cellPosition, bubble);
 
-            Debug.Log(cellPosition);
             if (cellPosition.y == _ceilingRow) {
                 bubble.onCeiling = true;
             }
@@ -101,8 +98,6 @@ namespace BubbleGame {
                 bubble.Fall(true);
             }
             StartCoroutine(SpawnBubble());
-
-            Debug.Log(sameColor.Count);
         }
 
         private void AddAdjacents(GluedBubble bubble) {

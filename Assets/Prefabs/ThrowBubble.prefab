@@ -104,10 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubbleColor: 0
   bubbleGrid: {fileID: 0}
-  _range: 2.5
+  _range: 2
   _maxVelocity: 4
-  _minDistanceToThrow: 11
-  _angleToThrow: 160
+  _minDistanceToThrow: 8
+  _timeToThrow: 5
   basePosition: {fileID: 0}
 --- !u!50 &5699135448611620914
 Rigidbody2D:
