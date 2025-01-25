@@ -57,6 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa0eb71cf30cde8494a95fcda5ea18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubblesToDestroy: []
+  cellSize: 0.525
+  maxPoppingTime: 0.8
+  poppingTime: 0
   _throwBubble: {fileID: 900329960146616267, guid: a0add6158e4c4398283241f62d161eae, type: 3}
   _glueBubble: {fileID: 900329960146616267, guid: eb2155931ea974680a31216d1cb750c6, type: 3}
   _ceilingRow: 8

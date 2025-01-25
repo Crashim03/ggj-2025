@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BubbleGame {
     public class BubbleGrid : MonoBehaviour {
         public Dictionary<Vector3Int, GluedBubble> gridHash = new();
-        public int popping = 0;
         public List<GameObject> bubblesToDestroy = new();
+        [SerializeField] private float cellSize = 0.8f;
+        [SerializeField] private float maxPoppingTime = 0.8f;
+        [SerializeField] private float poppingTime = 0f;
         [SerializeField] private GameObject _throwBubble;
         [SerializeField] private GameObject _glueBubble;
         [SerializeField] private int _ceilingRow = 0;
@@ -18,40 +21,50 @@ namespace BubbleGame {
 
         private Grid grid;
 
+        public void SetPoppingTimer() {
+            poppingTime = maxPoppingTime;
+        }
+
         public IEnumerator SpawnBubble() {
-            while (popping > 0) {
+            while (poppingTime > 0) {
                 Debug.Log("waiting");
+                poppingTime -= Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
                 
             Debug.Log("Got out");
             
             foreach (GameObject b in bubblesToDestroy) {
+                gridHash.Remove(b.GetComponent<GluedBubble>().position);
                 Destroy(b);
             }
 
-            ThrowingBubble bubble = Instantiate(_throwBubble, _basePosition.position, new Quaternion(), transform).GetComponent<ThrowingBubble>();
+
+            bubblesToDestroy.Clear();
+
+            ThrowingBubble bubble = Instantiate(_throwBubble, _basePosition.position, new Quaternion(), _basePosition).GetComponent<ThrowingBubble>();
             bubble.bubbleGrid = this;
             bubble.SetRandomColor();
             bubble.basePosition = _basePosition;
         }
 
         public void AddLine() {
-            Dictionary<Vector3Int, GluedBubble> newHash = new();
+            float newY = grid.transform.position.y - cellSize;
 
-            // Move one row down
-            foreach (Vector3Int position in gridHash.Keys) {
-                GluedBubble bubble = gridHash[position];
-                bubble.position.y -= 1;
+            grid.transform.position = new Vector3(grid.transform.position.x, newY, grid.transform.position.z);
+
+            _ceilingRow += 1;
+
+            foreach (GluedBubble bubble in gridHash.Values)
                 bubble.onCeiling = false;
-                newHash.Add(bubble.position, bubble);
-                bubble.transform.position = grid.GetCellCenterWorld(bubble.position);
-            }
 
-            gridHash = newHash;
+            int maxCollumn = _maxCollumn;
+
+            if (_ceilingRow % 2 != 0)
+                maxCollumn -= 1;
 
              // Add new bubbles
-            for (int i = _minCollumn; i <= _maxCollumn; i++) {
+            for (int i = _minCollumn; i <= maxCollumn; i++) {
                 Vector3Int position = new(i, _ceilingRow, 0);
                 GluedBubble bubble = Instantiate(_glueBubble, grid.GetCellCenterWorld(position), new Quaternion(), transform).GetComponent<GluedBubble>();
                 bubble.bubbleGrid = this;
@@ -67,8 +80,10 @@ namespace BubbleGame {
         }
 
         public void AddGluedBubble(GluedBubble bubble) {
+            bubble.transform.parent = transform;
             Vector3Int cellPosition = grid.WorldToCell(bubble.transform.position);
             bubble.transform.position = grid.GetCellCenterWorld(cellPosition);
+
             bubble.position = cellPosition;
             gridHash.Add(cellPosition, bubble);
 
@@ -133,10 +148,6 @@ namespace BubbleGame {
 
         private void Start() {
             StartCoroutine(SpawnBubble());
-            AddLine();
-            AddLine();
-            AddLine();
-            AddLine();
         }
 
         private void Awake() {

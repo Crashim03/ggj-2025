@@ -66,7 +66,7 @@ namespace BubbleGame {
         }
         
         private IEnumerator Falling(bool recursive) {
-            bubbleGrid.popping += 1;
+            bubbleGrid.SetPoppingTimer();
 
             yield return new WaitForSeconds(bubblePopTime);
             GetComponent<SpriteRenderer>().enabled = false;
@@ -83,9 +83,7 @@ namespace BubbleGame {
                     bubble.Fall(false);
             }
 
-            bubbleGrid.gridHash.Remove(position);
             bubbleGrid.bubblesToDestroy.Add(gameObject);
-            bubbleGrid.popping -= 1;
         }
 
         private void GetSameColorBubbles(List<GluedBubble> bubbles) {
