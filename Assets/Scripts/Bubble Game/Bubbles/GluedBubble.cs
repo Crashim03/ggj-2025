@@ -9,6 +9,7 @@ namespace BubbleGame {
     public class GluedBubble: Bubble {
         public Adjacents adjacents;
         public Vector3Int position;
+        public bool onCeiling = false;
 
         public GluedBubble() {
             adjacents.TopLeft = null;
@@ -32,6 +33,20 @@ namespace BubbleGame {
         public void CheckTop() {
             if (adjacents.TopRight == null && adjacents.TopLeft == null)
                 Fall(false);
+        }
+
+        public bool CanFall() {
+            if (onCeiling)
+                return false;
+
+            List<GluedBubble> adjacents = GetAdjacentBubbles();
+
+            foreach (GluedBubble bubble in adjacents)
+            {
+                if (!bubble.CanFall())
+                    return false;
+            }
+            return true;
         }
 
         private void RemoveBubbleInAdjacents(GluedBubble bubble) {
@@ -64,6 +79,12 @@ namespace BubbleGame {
                 adjacents.BottomLeft.CheckTop();
             if (adjacents.BottomRight != null)
                 adjacents.BottomRight.CheckTop();
+
+            if (adjacents.Right != null && adjacents.Right.CanFall())
+                adjacents.Right.Fall(false);
+
+            if (adjacents.Left != null && adjacents.Left.CanFall())
+                adjacents.Left.Fall(false);
 
             bubbleGrid.gridHash.Remove(position);
             Destroy(gameObject);

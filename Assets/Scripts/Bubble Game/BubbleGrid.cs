@@ -6,6 +6,7 @@ namespace BubbleGame {
     public class BubbleGrid : MonoBehaviour {
         public Dictionary<Vector3Int, GluedBubble> gridHash = new();
         [SerializeField] private GameObject _throwBubble;
+        [SerializeField] private int _ceilingRow = 0;
         [SerializeField] private Transform _basePosition;
         [SerializeField] private int bubblesToFall = 5;
         private Grid grid;
@@ -22,6 +23,11 @@ namespace BubbleGame {
             bubble.transform.position = grid.GetCellCenterWorld(cellPosition);
             bubble.position = cellPosition;
             gridHash.Add(cellPosition, bubble);
+
+            Debug.Log(cellPosition);
+            if (cellPosition.y == _ceilingRow) {
+                bubble.onCeiling = true;
+            }
 
             Vector3Int bottomRight;
             Vector3Int bottomLeft;
