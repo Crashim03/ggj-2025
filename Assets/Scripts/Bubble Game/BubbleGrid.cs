@@ -22,6 +22,7 @@ namespace BubbleGame {
         [SerializeField] private int _bubblesToFall = 5;
         [SerializeField] private int _minCollumn = -5;
         [SerializeField] private int _maxCollumn = 6;
+        private bool _isSpawningBubble = false;
         private Grid _grid;
 
         public void SetPoppingTimer() {
@@ -29,6 +30,8 @@ namespace BubbleGame {
         }
 
         public IEnumerator SpawnBubble() {
+            if (_isSpawningBubble) yield break;
+                _isSpawningBubble = true;
             while (_poppingTime > 0) {
                 _poppingTime -= Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
@@ -58,6 +61,7 @@ namespace BubbleGame {
             bubble.SetColor(_nextBubble.bubbleColor);
             _nextBubble.SetRandomColor();
             bubble.basePosition = _basePosition;
+            _isSpawningBubble = false;
         }
 
         public void AddLine() {
