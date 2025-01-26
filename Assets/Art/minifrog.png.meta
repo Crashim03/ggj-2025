@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 7f1ebf1d2a3998546ae25bb5184b164a
+guid: 566d216ecfee3ab46a07c4c5d490d157
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2389528499426102780
-    second: path_0
+      213: -9174597627687413556
+    second: minifrog_0
+  - first:
+      213: 6831847605451385793
+    second: minifrog_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: path_0
+      name: minifrog_0
       rect:
         serializedVersion: 2
-        x: 698
-        y: 81
-        width: 955
-        height: 999
+        x: 17
+        y: 115
+        width: 39
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cfd07fc828f492120800000000000000
-      internalID: 2389528499426102780
+      spriteID: cc8dc8411184da080800000000000000
+      internalID: -9174597627687413556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minifrog_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 64
+        width: 188
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cb688253399fce50800000000000000
+      internalID: 6831847605451385793
       vertices: []
       indices: 
       edges: []
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      path_0: 2389528499426102780
+      minifrog_0: -9174597627687413556
+      minifrog_1: 6831847605451385793
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

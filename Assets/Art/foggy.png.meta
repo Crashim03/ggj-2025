@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7f1ebf1d2a3998546ae25bb5184b164a
+guid: d2d26525e9aaada488dc4bffd864cbd6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2389528499426102780
-    second: path_0
+      213: -3746215262598439631
+    second: foggy_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: path_0
+      name: foggy_0
       rect:
         serializedVersion: 2
-        x: 698
-        y: 81
-        width: 955
-        height: 999
+        x: 7
+        y: 35
+        width: 235
+        height: 197
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cfd07fc828f492120800000000000000
-      internalID: 2389528499426102780
+      spriteID: 13d5ca42115c20cc0800000000000000
+      internalID: -3746215262598439631
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 016c8cb088881424d990d81c2798e5d0
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      path_0: 2389528499426102780
+      foggy_0: -3746215262598439631
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

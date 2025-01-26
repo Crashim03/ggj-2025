@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
@@ -12,11 +13,14 @@ public class TowerBehaviour : MonoBehaviour
     [SerializeField]
     private Transform turretBase;
     [SerializeField]
-    private float rotationSpeed = 180f;
+    private Transform shootingPoint;
+    [SerializeField]
+    private float rotationSpeed = 200f;
     private float turrretRange = 3f;
     private float fireRate = 1f;
+    private float timeUntilFire;
     
-    private void Update()
+    private void FixedUpdate()
     {
         if (currentTarget == null)
         {
@@ -29,6 +33,15 @@ public class TowerBehaviour : MonoBehaviour
         if (!IsTargetInRange())
         {
             currentTarget = null;
+        }
+        else
+        {
+            timeUntilFire += Time.deltaTime;
+            if (timeUntilFire >= 1f / fireRate)
+            {
+                Shoot();
+                timeUntilFire = 0f;
+            }
         }
     }
 
@@ -44,8 +57,13 @@ public class TowerBehaviour : MonoBehaviour
 
     private void FindTarget()
     {
-        Debug.Log("Finding target");
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, turrretRange, (Vector2)transform.position, 0f, enemyLayer);
+    
+        if (hits.Length > 0)
+        {
+            Debug.Log("Found target");
+            currentTarget = hits[0].transform;
+        }
     }
 
     private bool IsTargetInRange()
@@ -61,6 +79,12 @@ public class TowerBehaviour : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void Shoot()
+    {
+        //HEALTH SCORE BADJUBS
+        Destroy(currentTarget.gameObject);
     }
 
     private void OnDrawGizmos()
