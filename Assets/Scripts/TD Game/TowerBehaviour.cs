@@ -92,6 +92,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         //HEALTH SCORE BADJUBS?
         Destroy(currentTarget.gameObject);
+        GameManager.Instance.EnemyKilled();
     }
 
     void OnMouseDown()

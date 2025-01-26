@@ -16,6 +16,7 @@ public class GameManager: MonoBehaviour {
     private int blue = 0;
     private int yellow = 0;
     private int green = 0;
+    private int allBubbles = 0;
     private int enemiesKilled = 0;
     [SerializeField] private int maxHealthPoints = 25;
     private int healthPoints = 25;
@@ -39,24 +40,28 @@ public class GameManager: MonoBehaviour {
 
     private void IncrementRed() {
         red += 1;
+        allBubbles += 1;
         Debug.Log(red);
         redScore.SetText(red);
     }
 
     private void IncrementGreen() {
         green += 1;
+        allBubbles += 1;
         Debug.Log(green);
         greenScore.SetText(green);
     }
 
     private void IncrementYellow() {
         yellow += 1;
+        allBubbles += 1;
         Debug.Log(yellow);
         yellowScore.SetText(yellow);
     }
 
     private void IncrementBlue() {
         blue += 1;
+        allBubbles += 1;
         Debug.Log(blue);
         blueScore.SetText(blue);
     }
@@ -77,8 +82,12 @@ public class GameManager: MonoBehaviour {
         }
     }
 
+    public void EnemyKilled() {
+        enemiesKilled += 1;
+    }
+
     public void GameLose() {
-        int things = red + blue + yellow + green + enemiesKilled;
+        int things = allBubbles + enemiesKilled;
 
         if (things == 0) {
             things = 1;
