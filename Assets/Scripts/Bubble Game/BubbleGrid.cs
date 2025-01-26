@@ -108,7 +108,7 @@ namespace BubbleGame {
 
             bubble.position = cellPosition;
             Debug.Log(cellPosition);
-            gridHash.Add(cellPosition, bubble);
+            gridHash.TryAdd(cellPosition, bubble);
 
             if (cellPosition.y == _ceilingRow) {
                 bubble.onCeiling = true;

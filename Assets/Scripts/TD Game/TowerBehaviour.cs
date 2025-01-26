@@ -1,7 +1,4 @@
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
@@ -103,7 +100,9 @@ public class TowerBehaviour : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position, transform.forward, turrretRange);
+        #if UNITY_EDITOR
+            Handles.color = Color.red;
+            Handles.DrawWireDisc(transform.position, transform.forward, turrretRange);
+        #endif
     }
 }

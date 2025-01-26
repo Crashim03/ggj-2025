@@ -12,6 +12,7 @@ public class GameManager: MonoBehaviour {
     [SerializeField] private ScoreUI greenScore;
     [SerializeField] private ScoreUI yellowScore;
     [SerializeField] private TMP_Text healthScore;
+    [SerializeField] private bool _web = false;
     private int red = 0;
     private int blue = 0;
     private int yellow = 0;
@@ -95,8 +96,9 @@ public class GameManager: MonoBehaviour {
 
         float score = Time.timeSinceLevelLoad * things;
 
+        if (!_web)
+            SaveSystem.AddScore(score);
 
-        SaveSystem.AddScore(score);
         SceneManager.LoadScene("Finish Bubble Game");
     }
 
