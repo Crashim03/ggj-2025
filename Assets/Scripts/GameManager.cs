@@ -13,6 +13,7 @@ public class GameManager: MonoBehaviour {
     [SerializeField] private ScoreUI yellowScore;
     [SerializeField] private TMP_Text healthScore;
     [SerializeField] private bool _web = false;
+    [SerializeField] private TMP_Text totalBubbles;
     private int red = 0;
     private int blue = 0;
     private int yellow = 0;
@@ -44,6 +45,7 @@ public class GameManager: MonoBehaviour {
         allBubbles += 1;
         Debug.Log(red);
         redScore.SetText(red);
+        UpdateAllBubbles();
     }
 
     private void IncrementGreen() {
@@ -51,6 +53,7 @@ public class GameManager: MonoBehaviour {
         allBubbles += 1;
         Debug.Log(green);
         greenScore.SetText(green);
+        UpdateAllBubbles();
     }
 
     private void IncrementYellow() {
@@ -58,6 +61,7 @@ public class GameManager: MonoBehaviour {
         allBubbles += 1;
         Debug.Log(yellow);
         yellowScore.SetText(yellow);
+        UpdateAllBubbles();
     }
 
     private void IncrementBlue() {
@@ -65,6 +69,7 @@ public class GameManager: MonoBehaviour {
         allBubbles += 1;
         Debug.Log(blue);
         blueScore.SetText(blue);
+        UpdateAllBubbles();
     }
 
     public void DecreaseHealth() {
@@ -100,6 +105,21 @@ public class GameManager: MonoBehaviour {
             SaveSystem.AddScore(score);
 
         SceneManager.LoadScene("Finish Bubble Game");
+    }
+
+    private void UpdateAllBubbles() {
+        totalBubbles.text = allBubbles.ToString();
+    }
+
+    public void TowerBuy(int price)
+    {
+        allBubbles = allBubbles - price;
+        UpdateAllBubbles();
+    }
+
+    public int GetCurrency()
+    {
+        return allBubbles;
     }
 
     private void Awake()

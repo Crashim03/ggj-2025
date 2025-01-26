@@ -1,9 +1,11 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerBehaviour : MonoBehaviour
 {
     private Transform currentTarget;
+    private EnemyBehaviour targetScript;
     [SerializeField]
     private LayerMask enemyLayer;
 
@@ -14,10 +16,11 @@ public class TowerBehaviour : MonoBehaviour
     private Transform shootingPoint;
     [SerializeField]
     private float rotationSpeed = 200f;
-    private float turrretRange = 3f;
+    private float turrretRange = 4f;
     private float fireRate = 1f;
     private float timeUntilFire;
-    
+    [SerializeField]
+    private Image buyHighlight;
     private void FixedUpdate()
     {
         if (isTowerBought)
@@ -50,6 +53,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         turretBase.GetComponent<SpriteRenderer>().enabled = true;
         isTowerBought = true;
+        buyHighlight.enabled = false;
     }
 
     // private void OnTriggerEnter2D(Collider2D other)
@@ -69,6 +73,7 @@ public class TowerBehaviour : MonoBehaviour
         if (hits.Length > 0)
         {
             currentTarget = hits[0].transform;
+            targetScript = currentTarget.GetComponent<EnemyBehaviour>();
         }
     }
 
@@ -87,9 +92,7 @@ public class TowerBehaviour : MonoBehaviour
 
     private void Shoot()
     {
-        //HEALTH SCORE BADJUBS?
-        Destroy(currentTarget.gameObject);
-        GameManager.Instance.EnemyKilled();
+        targetScript.TakeDamage();
     }
 
     void OnMouseDown()
@@ -104,5 +107,10 @@ public class TowerBehaviour : MonoBehaviour
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.forward, turrretRange);
         #endif
+    }
+
+    public void ToggleBuy()
+    {
+        buyHighlight.enabled = !buyHighlight.enabled;
     }
 }

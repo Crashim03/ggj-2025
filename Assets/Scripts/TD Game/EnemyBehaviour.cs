@@ -8,6 +8,7 @@ public class EnemyBehaviour : MonoBehaviour
 {
     private Transform endPoint;
     private NavMeshAgent agent;
+    private int health = 1;
 
     private void Start()
     {
@@ -24,5 +25,20 @@ public class EnemyBehaviour : MonoBehaviour
     public void SetEndPoint(Transform point)
     {
         endPoint = point;
+    }
+
+    public void SetEnemyHealth(int hp)
+    {
+        this.health = hp;
+    }
+
+    public void TakeDamage()
+    {
+        health--;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            GameManager.Instance.EnemyKilled();
+        }
     }
 }

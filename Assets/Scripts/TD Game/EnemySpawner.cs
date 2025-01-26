@@ -16,10 +16,14 @@ public class EnemySpawner : MonoBehaviour
     private float waveCooldown = 5f;
     [SerializeField]
     private int spawnCount = 4;
+    [SerializeField]
+    private int enemyStartingHealth = 1;
+    private int enemyHealth;
 
     private void Start()
     {
         StartCoroutine(WaveSpawner());
+        enemyHealth = enemyStartingHealth;
     }
 
 
@@ -36,7 +40,9 @@ public class EnemySpawner : MonoBehaviour
                 GameObject enemy = Instantiate(enemyObject, spawnPosition);
                 var enemyScript = enemy.GetComponent<EnemyBehaviour>();
                 enemyScript.SetEndPoint(endPosition);
+                enemyScript.SetEnemyHealth(enemyHealth);
             }
+            enemyHealth++;
         }
     }
 }
