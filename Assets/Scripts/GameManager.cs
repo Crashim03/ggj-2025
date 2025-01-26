@@ -16,6 +16,7 @@ public class GameManager: MonoBehaviour {
     private int blue = 0;
     private int yellow = 0;
     private int green = 0;
+    private int enemiesKilled = 0;
     [SerializeField] private int maxHealthPoints = 25;
     private int healthPoints = 25;
 
@@ -77,6 +78,16 @@ public class GameManager: MonoBehaviour {
     }
 
     public void GameLose() {
+        int things = red + blue + yellow + green + enemiesKilled;
+
+        if (things == 0) {
+            things = 1;
+        }
+
+        float score = Time.timeSinceLevelLoad * things;
+
+
+        SaveSystem.AddScore(score);
         SceneManager.LoadScene("Finish Bubble Game");
     }
 
