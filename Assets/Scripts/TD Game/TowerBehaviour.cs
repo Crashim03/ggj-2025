@@ -10,6 +10,7 @@ public class TowerBehaviour : MonoBehaviour
     [SerializeField]
     private LayerMask enemyLayer;
 
+    private bool isTowerBought = false;
     [SerializeField]
     private Transform turretBase;
     [SerializeField]
@@ -22,25 +23,28 @@ public class TowerBehaviour : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (currentTarget == null)
+        if (isTowerBought)
         {
-            FindTarget();
-            return;
-        }
-
-        RotateToTarget();
-
-        if (!IsTargetInRange())
-        {
-            currentTarget = null;
-        }
-        else
-        {
-            timeUntilFire += Time.deltaTime;
-            if (timeUntilFire >= 1f / fireRate)
+            if (currentTarget == null)
             {
-                Shoot();
-                timeUntilFire = 0f;
+                FindTarget();
+                return;
+            }
+
+            RotateToTarget();
+
+            if (!IsTargetInRange())
+            {
+                currentTarget = null;
+            }
+            else
+            {
+                timeUntilFire += Time.deltaTime;
+                if (timeUntilFire >= 1f / fireRate)
+                {
+                    Shoot();
+                    timeUntilFire = 0f;
+                }
             }
         }
     }

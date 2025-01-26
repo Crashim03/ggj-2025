@@ -1,5 +1,9 @@
+using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager: MonoBehaviour {
     public static GameManager Instance { get; private set; }
@@ -7,10 +11,13 @@ public class GameManager: MonoBehaviour {
     [SerializeField] private ScoreUI blueScore;
     [SerializeField] private ScoreUI greenScore;
     [SerializeField] private ScoreUI yellowScore;
+    [SerializeField] private TMP_Text healthScore;
     private int red = 0;
     private int blue = 0;
     private int yellow = 0;
     private int green = 0;
+    [SerializeField] private int maxHealthPoints = 25;
+    private int healthPoints = 25;
 
     public void Pop(BubbleColor color) {
         switch (color) {
@@ -53,6 +60,26 @@ public class GameManager: MonoBehaviour {
         blueScore.SetText(blue);
     }
 
+    public void DecreaseHealth() {
+        healthPoints -= 1;
+        UpdateHealth();
+        CheckHealth();
+    }
+
+    private void UpdateHealth() {
+        healthScore.text = healthPoints.ToString()+" / "+maxHealthPoints.ToString();
+    }
+
+    private void CheckHealth() {
+        if (healthPoints <= 0) {
+            GameLose();
+        }
+    }
+
+    public void GameLose() {
+        SceneManager.LoadScene("Finish Bubble Game");
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -63,5 +90,8 @@ public class GameManager: MonoBehaviour {
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        healthPoints = maxHealthPoints;
+        UpdateHealth();
     }
 }
