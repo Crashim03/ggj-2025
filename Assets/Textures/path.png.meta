@@ -116,10 +116,10 @@ TextureImporter:
       name: path_0
       rect:
         serializedVersion: 2
-        x: 698
-        y: 81
-        width: 955
-        height: 999
+        x: 0
+        y: 0
+        width: 942
+        height: 995
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: de216a56e2c85e045a66d4d665f688ef
     internalID: 0
     vertices: []
     indices: 
