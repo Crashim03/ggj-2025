@@ -1,8 +1,10 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace BubbleGame {
     public class ThrowingBubble: Bubble {
+        [SerializeField] private GameObject _arrow;
         [SerializeField] private float _range = 5f;
         [SerializeField] private float _maxVelocity = 5f;
         [SerializeField] private float _minDistanceToThrow = 11f;
@@ -73,8 +75,11 @@ namespace BubbleGame {
         private void Update() {
             _distance = Vector3.Distance(transform.position, basePosition.position);
 
-            if (!_holding || _thrown)
+            if (!_holding || _thrown) {
+                _arrow.SetActive(false);
                 return;
+            }
+            _arrow.SetActive(true);
             
             if (Input.GetMouseButtonUp(0)) {
                 if (_distance < _minDistanceToThrow) {
@@ -100,6 +105,9 @@ namespace BubbleGame {
                 position = basePosition.position + direction.normalized * _range;
             }
 
+            float angle = Vector2.SignedAngle(worldMousePosition - basePosition.position, Vector3.down);
+            _arrow.transform.rotation = Quaternion.Euler(0, 0, -angle);
+            _arrow.transform.position = basePosition.position;
             rigidBody.MovePosition(position);
         }
     }

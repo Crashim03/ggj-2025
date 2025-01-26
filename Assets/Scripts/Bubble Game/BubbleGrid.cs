@@ -171,6 +171,9 @@ namespace BubbleGame {
             while (true) {
                 timer -= Time.fixedDeltaTime;
                 if (timer <= 0) {
+                    while (_poppingTime > 0)
+                        yield return new WaitForFixedUpdate();
+                        
                     AddLine();
                     timer = _addLineTime;
                 }
