@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 900329960146616267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.8600001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -80,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -2615874204119335, guid: ec4fdb58ff97d977db9b5b9eab888076, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 2.44, y: 2.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -105,6 +105,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubbleColor: 0
   bubbleGrid: {fileID: 0}
+  redSprite: {fileID: 8166710274925509176, guid: 711d1833e67e75c1c9dd6c698f5701f4, type: 3}
+  blueSprite: {fileID: -2615874204119335, guid: ec4fdb58ff97d977db9b5b9eab888076, type: 3}
+  greenSprite: {fileID: -6099873399732076034, guid: 11b197d00c9c7b19a92fb85d94df5e6f, type: 3}
+  yellowSprite: {fileID: -8425141836431729757, guid: 46c142279d9ebe1d586e3617462e01db, type: 3}
   _arrow: {fileID: 1578995826935245647}
   _range: 3
   _maxVelocity: 20
@@ -173,7 +177,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.08
+  m_Radius: 0.28
 --- !u!1 &1578995826935245647
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3505119211231652524
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +205,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.423, z: 0}
-  m_LocalScale: {x: 0.011932, y: 0.65108, z: 1}
+  m_LocalScale: {x: 0.04743013, y: 3.1242883, z: 4.798625}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1918793075681570266}

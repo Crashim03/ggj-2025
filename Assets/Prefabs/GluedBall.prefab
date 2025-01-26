@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 900329960146616267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.8600001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.6599998, y: 3.6599998, z: 3.6599998}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -8425141836431729757, guid: 46c142279d9ebe1d586e3617462e01db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.08
+  m_Radius: 0.26
 --- !u!114 &3927856327711573385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +167,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubbleColor: 0
   bubbleGrid: {fileID: 0}
+  redSprite: {fileID: 8166710274925509176, guid: 711d1833e67e75c1c9dd6c698f5701f4, type: 3}
+  blueSprite: {fileID: -2615874204119335, guid: ec4fdb58ff97d977db9b5b9eab888076, type: 3}
+  greenSprite: {fileID: -6099873399732076034, guid: 11b197d00c9c7b19a92fb85d94df5e6f, type: 3}
+  yellowSprite: {fileID: -8425141836431729757, guid: 46c142279d9ebe1d586e3617462e01db, type: 3}
   position: {x: 0, y: 0, z: 0}
   bubblePopTime: 0.1
   onCeiling: 0

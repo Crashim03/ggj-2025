@@ -847,15 +847,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918793075681570266, guid: a0add6158e4c4398283241f62d161eae, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.7992
+      value: 1.5965532
       objectReference: {fileID: 0}
     - target: {fileID: 1918793075681570266, guid: a0add6158e4c4398283241f62d161eae, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.7992
+      value: 1.5965532
       objectReference: {fileID: 0}
     - target: {fileID: 1918793075681570266, guid: a0add6158e4c4398283241f62d161eae, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.7992
+      value: 1.5965532
       objectReference: {fileID: 0}
     - target: {fileID: 1918793075681570266, guid: a0add6158e4c4398283241f62d161eae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -901,7 +901,8 @@ PrefabInstance:
     - {fileID: 5699135448611620914, guid: a0add6158e4c4398283241f62d161eae, type: 3}
     - {fileID: 3681400161035958840, guid: a0add6158e4c4398283241f62d161eae, type: 3}
     - {fileID: 5941541180573285328, guid: a0add6158e4c4398283241f62d161eae, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1578995826935245647, guid: a0add6158e4c4398283241f62d161eae, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 900329960146616267, guid: a0add6158e4c4398283241f62d161eae, type: 3}
@@ -927,6 +928,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubbleColor: 0
   bubbleGrid: {fileID: 0}
+  redSprite: {fileID: 8166710274925509176, guid: 711d1833e67e75c1c9dd6c698f5701f4, type: 3}
+  blueSprite: {fileID: -2615874204119335, guid: ec4fdb58ff97d977db9b5b9eab888076, type: 3}
+  greenSprite: {fileID: -6099873399732076034, guid: 11b197d00c9c7b19a92fb85d94df5e6f, type: 3}
+  yellowSprite: {fileID: -8425141836431729757, guid: 46c142279d9ebe1d586e3617462e01db, type: 3}
 --- !u!4 &8335597444501793603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1918793075681570266, guid: a0add6158e4c4398283241f62d161eae, type: 3}

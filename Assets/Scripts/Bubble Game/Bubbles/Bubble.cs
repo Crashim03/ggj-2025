@@ -5,6 +5,10 @@ namespace BubbleGame {
     public class Bubble: MonoBehaviour {
         public BubbleColor bubbleColor;
         public BubbleGrid bubbleGrid;
+        public Sprite redSprite;
+        public Sprite blueSprite;
+        public Sprite greenSprite;
+        public Sprite yellowSprite;
         protected Rigidbody2D rigidBody;
 
         private void Awake() {
@@ -13,23 +17,22 @@ namespace BubbleGame {
 
         public void SetColor(BubbleColor bubbleColor) {
             this.bubbleColor = bubbleColor;
-            Color color = Color.red;
+            
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             switch(bubbleColor) {
                 case BubbleColor.Red:
-                    color = Color.red;
+                    spriteRenderer.sprite = redSprite;
                     break;
                 case BubbleColor.Blue:
-                    color = Color.blue;
+                    spriteRenderer.sprite = blueSprite;
                     break;
                 case BubbleColor.Yellow:
-                    color = Color.yellow;
+                    spriteRenderer.sprite = yellowSprite;
                     break;
                 case BubbleColor.Green:
-                    color = Color.green;
+                    spriteRenderer.sprite = greenSprite;
                     break;
             }
-
-            GetComponent<SpriteRenderer>().color = color;
         }
 
         public void SetRandomColor() {
