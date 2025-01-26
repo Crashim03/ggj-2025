@@ -12,7 +12,7 @@ public class TowerBehaviour : MonoBehaviour
 
     private bool isTowerBought = false;
     [SerializeField]
-    private Transform turretBase;
+    private GameObject turretBase;
     [SerializeField]
     private Transform shootingPoint;
     [SerializeField]
@@ -49,6 +49,12 @@ public class TowerBehaviour : MonoBehaviour
         }
     }
 
+    public void EnableTurret()
+    {
+        turretBase.GetComponent<SpriteRenderer>().enabled = true;
+        isTowerBought = true;
+    }
+
     // private void OnTriggerEnter2D(Collider2D other)
     // {
     //     Debug.Log("Collided with alguma merda");
@@ -65,30 +71,33 @@ public class TowerBehaviour : MonoBehaviour
     
         if (hits.Length > 0)
         {
-            Debug.Log("Found target");
             currentTarget = hits[0].transform;
         }
     }
 
     private bool IsTargetInRange()
     {
-        Debug.Log("Checking if target is in range");
         return Vector2.Distance(transform.position, currentTarget.position) <= turrretRange;
     }
 
     private void RotateToTarget()
     {
-        Debug.Log("Rotating to target");
         float angle = Mathf.Atan2(currentTarget.position.y - transform.position.y, currentTarget.position.x - transform.position.x) * Mathf.Rad2Deg - 90f;
 
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-        turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        turretBase.transform.rotation = Quaternion.RotateTowards(turretBase.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void Shoot()
     {
-        //HEALTH SCORE BADJUBS
+        //HEALTH SCORE BADJUBS?
         Destroy(currentTarget.gameObject);
+    }
+
+    void OnMouseDown()
+    {
+        if (!isTowerBought)
+        TurretManager.Instance.TowerCheck(gameObject);
     }
 
     private void OnDrawGizmos()

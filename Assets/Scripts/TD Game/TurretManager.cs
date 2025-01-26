@@ -1,9 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TurretManager : MonoBehaviour
 {
     public static TurretManager Instance { get; private set; }
-    private GameObject[] turretPlots;
+    private List<GameObject> turretPlots = new List<GameObject>();
 
     private void Awake()
     {
@@ -16,6 +17,23 @@ public class TurretManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        turretPlots = GameObject.FindGameObjectsWithTag("TurretPlot");
+        turretPlots.AddRange(GameObject.FindGameObjectsWithTag("TurretPlot"));
+    }
+
+
+    public void TowerCheck(GameObject tower)
+    {
+        var plotsCopy = new List<GameObject>(turretPlots);
+
+        foreach (GameObject plot in plotsCopy)
+        {
+            if (plot == tower)
+            {
+                tower.GetComponent<TowerBehaviour>().EnableTurret();
+                turretPlots.Remove(plot);
+            }
+        }
+
+        tower.GetComponent<TowerBehaviour>().EnableTurret();
     }
 }
