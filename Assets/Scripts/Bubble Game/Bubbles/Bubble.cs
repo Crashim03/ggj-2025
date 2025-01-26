@@ -11,15 +11,10 @@ namespace BubbleGame {
             rigidBody = GetComponent<Rigidbody2D>();
         }
 
-        public void SetRandomColor() {
-            Array values = Enum.GetValues(typeof(BubbleColor));
-            System.Random random = new();
-            BubbleColor randomColor = (BubbleColor)values.GetValue(random.Next(values.Length));
-
-            bubbleColor = randomColor;
-
+        public void SetColor(BubbleColor bubbleColor) {
+            this.bubbleColor = bubbleColor;
             Color color = Color.red;
-            switch(randomColor) {
+            switch(bubbleColor) {
                 case BubbleColor.Red:
                     color = Color.red;
                     break;
@@ -35,6 +30,14 @@ namespace BubbleGame {
             }
 
             GetComponent<SpriteRenderer>().color = color;
+        }
+
+        public void SetRandomColor() {
+            Array values = Enum.GetValues(typeof(BubbleColor));
+            System.Random random = new();
+            BubbleColor randomColor = (BubbleColor)values.GetValue(random.Next(values.Length));
+
+            SetColor(randomColor);
         }
     }
     

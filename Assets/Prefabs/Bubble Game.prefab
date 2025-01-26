@@ -58,14 +58,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubblesToDestroy: []
-  cellSize: 0.75
-  maxPoppingTime: 0.8
-  poppingTime: 0
+  _cellSize: 0.76
+  _initialLines: 4
+  _addLineTime: 10
+  _maxPoppingTime: 0.8
+  _poppingTime: 0
+  _nextBubble: {fileID: 0}
   _throwBubble: {fileID: 900329960146616267, guid: a0add6158e4c4398283241f62d161eae, type: 3}
   _glueBubble: {fileID: 900329960146616267, guid: eb2155931ea974680a31216d1cb750c6, type: 3}
   _ceilingRow: 6
   _basePosition: {fileID: 5132099817984808983}
-  bubblesToFall: 3
+  _bubblesToFall: 3
   _minCollumn: -3
   _maxCollumn: 4
 --- !u!1 &1592890556982881421

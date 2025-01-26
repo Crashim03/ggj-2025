@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class GameManager: MonoBehaviour {
     public static GameManager Instance { get; private set; }
-    public UnityEvent<int> incrementRedEvent;
-    public UnityEvent<int> incrementBlueEvent;
-    public UnityEvent<int> incrementYellowEvent;
-    public UnityEvent<int> incrementGreenEvent;
+    [SerializeField] private ScoreUI redScore;
+    [SerializeField] private ScoreUI blueScore;
+    [SerializeField] private ScoreUI greenScore;
+    [SerializeField] private ScoreUI yellowScore;
     private int red = 0;
     private int blue = 0;
     private int yellow = 0;
@@ -31,22 +31,26 @@ public class GameManager: MonoBehaviour {
 
     private void IncrementRed() {
         red += 1;
-        incrementRedEvent.Invoke(red);
+        Debug.Log(red);
+        redScore.SetText(red);
     }
 
     private void IncrementGreen() {
         green += 1;
-        incrementGreenEvent.Invoke(green);
+        Debug.Log(green);
+        greenScore.SetText(green);
     }
 
     private void IncrementYellow() {
         yellow += 1;
-        incrementYellowEvent.Invoke(yellow);
+        Debug.Log(yellow);
+        yellowScore.SetText(yellow);
     }
 
     private void IncrementBlue() {
         blue += 1;
-        incrementBlueEvent.Invoke(blue);
+        Debug.Log(blue);
+        blueScore.SetText(blue);
     }
 
     private void Awake()

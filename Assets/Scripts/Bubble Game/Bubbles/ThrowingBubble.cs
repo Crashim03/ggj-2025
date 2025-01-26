@@ -1,8 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace BubbleGame {
     public class ThrowingBubble: Bubble {
@@ -30,9 +27,7 @@ namespace BubbleGame {
             Vector3 velocity = basePosition.position - transform.position;
             float maxDistance = _range;
 
-            float distance = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),basePosition.position);
-
-            float speed = distance * _maxVelocity / maxDistance;
+            float speed = _distance * _maxVelocity / maxDistance;
 
             velocity.Normalize();
             velocity *= speed;
@@ -76,7 +71,7 @@ namespace BubbleGame {
         }
 
         private void Update() {
-            _distance = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), basePosition.position);
+            _distance = Vector3.Distance(transform.position, basePosition.position);
 
             if (!_holding || _thrown)
                 return;
@@ -88,20 +83,24 @@ namespace BubbleGame {
                 } else 
                     Throw();
             }
-            
+
             Vector3 position;
-            if ((Camera.main.ScreenToWorldPoint(Input.mousePosition) - basePosition.position).sqrMagnitude < Mathf.Pow(_range, 2))
-                position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            else {
-                Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - basePosition.position;
+
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = Camera.main.WorldToScreenPoint(basePosition.position).z; // Set the z to match the object's depth
+            Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            if (Vector3.Distance(worldMousePosition, basePosition.position) < _range)
+            {
+                position = worldMousePosition;
+            }
+            else
+            {
+                Vector3 direction = worldMousePosition - basePosition.position;
                 position = basePosition.position + direction.normalized * _range;
             }
 
             rigidBody.MovePosition(position);
-        }
-
-        private void Start() {
-            SetRandomColor();
         }
     }
 }

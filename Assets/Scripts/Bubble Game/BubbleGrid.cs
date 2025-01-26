@@ -9,26 +9,28 @@ namespace BubbleGame {
     public class BubbleGrid : MonoBehaviour {
         public Dictionary<Vector3Int, GluedBubble> gridHash = new();
         public List<GameObject> bubblesToDestroy = new();
-        [SerializeField] private float cellSize = 0.8f;
-        [SerializeField] private float maxPoppingTime = 0.8f;
-        [SerializeField] private float poppingTime = 0f;
+        [SerializeField] private float _cellSize = 0.8f;
+        [SerializeField] private int _initialLines = 4;
+        [SerializeField] private float _addLineTime = 10f;
+        [SerializeField] private float _maxPoppingTime = 0.8f;
+        [SerializeField] private float _poppingTime = 0f;
+        [SerializeField] private Bubble _nextBubble;
         [SerializeField] private GameObject _throwBubble;
         [SerializeField] private GameObject _glueBubble;
         [SerializeField] private int _ceilingRow = 0;
         [SerializeField] private Transform _basePosition;
-        [SerializeField] private int bubblesToFall = 5;
+        [SerializeField] private int _bubblesToFall = 5;
         [SerializeField] private int _minCollumn = -5;
         [SerializeField] private int _maxCollumn = 6;
-
-        private Grid grid;
+        private Grid _grid;
 
         public void SetPoppingTimer() {
-            poppingTime = maxPoppingTime;
+            _poppingTime = _maxPoppingTime;
         }
 
         public IEnumerator SpawnBubble() {
-            while (poppingTime > 0) {
-                poppingTime -= Time.fixedDeltaTime;
+            while (_poppingTime > 0) {
+                _poppingTime -= Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
                 
@@ -41,7 +43,7 @@ namespace BubbleGame {
             bubblesToDestroy.Clear();
 
             ThrowingBubble bubble = Instantiate(_throwBubble, _basePosition.position, new Quaternion(), _basePosition).GetComponent<ThrowingBubble>();
-            Vector3 worldCellSize = Vector3.Scale(grid.cellSize, grid.transform.lossyScale);
+            Vector3 worldCellSize = Vector3.Scale(_grid.cellSize, _grid.transform.lossyScale);
 
             Vector3 bubbleOriginalSize = bubble.GetComponent<Renderer>().bounds.size;
             Vector3 scaleFactor = new(
@@ -53,14 +55,15 @@ namespace BubbleGame {
             bubble.transform.localScale = Vector3.Scale(bubble.transform.localScale, scaleFactor);
 
             bubble.bubbleGrid = this;
-            bubble.SetRandomColor();
+            bubble.SetColor(_nextBubble.bubbleColor);
+            _nextBubble.SetRandomColor();
             bubble.basePosition = _basePosition;
         }
 
         public void AddLine() {
-            grid.transform.position = new Vector3(grid.transform.position.x, grid.transform.position.y - cellSize, grid.transform.position.z);
+            _grid.transform.position = new Vector3(_grid.transform.position.x, _grid.transform.position.y - _cellSize, _grid.transform.position.z);
             
-            Vector3 worldCellSize = Vector3.Scale(grid.cellSize, grid.transform.lossyScale);
+            Vector3 worldCellSize = Vector3.Scale(_grid.cellSize, _grid.transform.lossyScale);
 
             _ceilingRow += 1;
 
@@ -75,7 +78,7 @@ namespace BubbleGame {
              // Add new bubbles
             for (int i = _minCollumn; i <= maxCollumn; i++) {
                 Vector3Int position = new(i, _ceilingRow, 0);
-                GluedBubble bubble = Instantiate(_glueBubble, grid.GetCellCenterWorld(position), new Quaternion(), transform).GetComponent<GluedBubble>();
+                GluedBubble bubble = Instantiate(_glueBubble, _grid.GetCellCenterWorld(position), new Quaternion(), transform).GetComponent<GluedBubble>();
 
                 Vector3 bubbleOriginalSize = bubble.GetComponent<Renderer>().bounds.size;
                 Vector3 scaleFactor = new(
@@ -100,8 +103,8 @@ namespace BubbleGame {
 
         public void AddGluedBubble(GluedBubble bubble) {
             bubble.transform.parent = transform;
-            Vector3Int cellPosition = grid.WorldToCell(bubble.transform.position);
-            bubble.transform.position = grid.GetCellCenterWorld(cellPosition);
+            Vector3Int cellPosition = _grid.WorldToCell(bubble.transform.position);
+            bubble.transform.position = _grid.GetCellCenterWorld(cellPosition);
 
             bubble.position = cellPosition;
             Debug.Log(cellPosition);
@@ -116,7 +119,7 @@ namespace BubbleGame {
             List<GluedBubble> sameColor = bubble.GetSameColorBubbles();
             
 
-            if (sameColor.Count >= bubblesToFall) {
+            if (sameColor.Count >= _bubblesToFall) {
                 bubble.Fall(true, new List<GluedBubble>());
             }
             StartCoroutine(SpawnBubble());
@@ -163,15 +166,31 @@ namespace BubbleGame {
             }
         }
 
+        private IEnumerator AddLineTimer() {
+            float timer = _addLineTime;
+            while (true) {
+                timer -= Time.fixedDeltaTime;
+                if (timer <= 0) {
+                    AddLine();
+                    timer = _addLineTime;
+                }
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
         private void Start() {
             StartCoroutine(SpawnBubble());
-            AddLine();
-            AddLine();
-            AddLine();
+            
+            for (int i = 0; i < _initialLines; i++) {
+                AddLine();
+            }
+            
+            _nextBubble.SetRandomColor();
+            StartCoroutine(AddLineTimer());
         }
 
         private void Awake() {
-            grid = GetComponent<Grid>();
+            _grid = GetComponent<Grid>();
         }
     }
 }
